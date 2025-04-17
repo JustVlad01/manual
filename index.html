@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Around Noon Delivery Manual</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #FF6B00;
+            --primary-dark: #E05A00;
+            --primary-light: #FFF8F3;
+            --secondary: #0055A4;
+            --secondary-light: #E6F0FF;
+            --success: #108548;
+            --success-light: #ECFDF5;
+            --warning: #D97706;
+            --warning-light: #FFFBEB;
+            --white: #FFFFFF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+            --map-road: #FFFFFF;
+            --map-background: #F2F3F4;
+            --map-highway: #E5E7EB;
+            --map-building: #E9EAEC;
+            --map-park: #E6EFE9;
+            --map-water: #D6E7F5;
+            --map-border: #DFE1E5;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--gray-800);
+            background-color: var(--white);
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+        
+        header {
+            background-color: var(--white);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--gray-100);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            background-color: var(--primary);
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            position: relative;
+        }
+        
+        .subtitle {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--gray-400);
+            letter-spacing: 0.3px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 0;
+        }
+        
+        .search-section {
+            padding: 1.25rem 1rem;
+            background-color: var(--white);
+            border-bottom: 1px solid var(--gray-100);
+        }
+        
+        .search-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--gray-700);
+            display: block;
+        }
+        
+        .input-group {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        
+        .input-group svg {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+        }
+        
+        .search-section input {
+            width: 100%;
+            padding: 0.9rem 1rem 0.9rem 2.6rem;
+            font-size: 1rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            color: var(--gray-800);
+            background-color: var(--white);
+            font-family: 'Inter', sans-serif;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        
+        .search-section input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255,107,0,0.15);
+        }
+        
+        .search-section input.active {
+            border: 1px solid var(--primary);
+        }
+        
+        .btn {
+            padding: 0.9rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.15s ease;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(1px);
+        }
+        
+        .btn svg {
+            margin-right: 8px;
+        }
+        
+        .search-results {
+            margin-top: 1rem;
+        }
+        
+        .search-badge {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--success-light);
+            color: var(--success);
+            padding: 0.35rem 0.7rem;
+            border-radius: 999px;
+            font-weight: 500;
+            font-size: 0.8125rem;
+        }
+        
+        .search-badge svg {
+            margin-right: 6px;
+        }
+        
+        .location-header {
+            padding: 1.25rem 1rem;
+            background-color: var(--white);
+            border-bottom: 1px solid var(--gray-100);
+        }
+        
+        .shop-badge {
+            display: inline-block;
+            background-color: var(--secondary-light);
+            color: var(--secondary);
+            padding: 0.25rem 0.6rem;
+            border-radius: 999px;
+            font-weight: 500;
+            font-size: 0.8125rem;
+            margin-bottom: 0.6rem;
+        }
+        
+        .shop-name {
+            color: var(--gray-900);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+        
+        .shop-address {
+            color: var(--gray-700);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: flex-start;
+            word-break: break-word;
+        }
+        
+        .shop-address svg {
+            margin-right: 6px;
+            flex-shrink: 0;
+            color: var(--gray-500);
+            margin-top: 4px;
+        }
+        
+        .map-section {
+            margin-bottom: 0;
+            position: relative;
+            height: 220px;
+            background-color: var(--map-background);
+            overflow: hidden;
+        }
+        
+        .custom-map {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        /* Map Elements */
+        .map-building {
+            position: absolute;
+            background-color: var(--map-building);
+            border-radius: 2px;
+        }
+        
+        .map-road {
+            position: absolute;
+            background-color: var(--map-road);
+        }
+        
+        .map-highway {
+            position: absolute;
+            background-color: var(--map-highway);
+        }
+        
+        .map-park {
+            position: absolute;
+            background-color: var(--map-park);
+            border-radius: 100%;
+        }
+        
+        .map-water {
+            position: absolute;
+            background-color: var(--map-water);
+            border-radius: 50%;
+        }
+        
+        .map-target {
+            position: absolute;
+            background-color: var(--primary-light);
+            border: 2px solid var(--primary);
+            border-radius: 2px;
+            z-index: 10;
+        }
+        
+        .map-pin {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--primary);
+            filter: drop-shadow(0 1px 3px rgba(0,0,0,0.3));
+            animation: pulse 1.5s infinite;
+            z-index: 20;
+        }
+        
+        .map-label {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            color: var(--gray-800);
+            z-index: 15;
+            white-space: nowrap;
+        }
+        
+        .navigation-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background-color: var(--white);
+            color: var(--secondary);
+            font-weight: 600;
+            text-decoration: none;
+            border-top: 1px solid var(--gray-100);
+            border-bottom: 1px solid var(--gray-100);
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .navigation-btn svg {
+            margin-right: 0.5rem;
+        }
+        
+        .section-title {
+            padding: 1.25rem 1rem 0.75rem;
+            color: var(--gray-900);
+            font-size: 1.125rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            background-color: var(--white);
+            margin: 0;
+        }
+        
+        .section-title svg {
+            margin-right: 8px;
+            color: var(--primary);
+        }
+        
+        .step {
+            position: relative;
+            padding: 1.25rem 1rem 1.25rem 3rem;
+            background-color: var(--white);
+            border-bottom: 1px solid var(--gray-100);
+        }
+        
+        .step-number {
+            position: absolute;
+            top: 1.25rem;
+            left: 1rem;
+            background-color: var(--primary);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            font-size: 0.8125rem;
+        }
+        
+        .step-content {
+            font-weight: 500;
+            color: var(--gray-800);
+            margin-bottom: 1rem;
+        }
+        
+        .step-image {
+            margin-top: 0.5rem;
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .step-image img {
+            width: auto;
+            height: auto;
+            display: block;
+            max-width: 80%;
+            max-height: 400px;
+            margin: 0 auto;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .notes-section {
+            background-color: var(--warning-light);
+            padding: 1.25rem 1rem;
+            position: relative;
+        }
+        
+        .notes-title {
+            color: var(--warning);
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        
+        .notes-title svg {
+            margin-right: 8px;
+        }
+        
+        .notes-list {
+            padding-left: 1.75rem;
+            margin: 0;
+        }
+        
+        .notes-list li {
+            margin-bottom: 0.5rem;
+            color: var(--gray-700);
+        }
+        
+        .contact-info {
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background-color: var(--white);
+            border-radius: 8px;
+        }
+        
+        .contact-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--secondary-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 12px;
+            color: var(--secondary);
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .contact-details {
+            flex-grow: 1;
+        }
+        
+        .contact-name {
+            font-weight: 600;
+            font-size: 0.9375rem;
+            color: var(--gray-900);
+        }
+        
+        .contact-phone {
+            font-size: 0.875rem;
+            color: var(--gray-700);
+        }
+        
+        .contact-call {
+            background-color: var(--success-light);
+            color: var(--success);
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            flex-shrink: 0;
+            transition: all 0.15s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .contact-call:hover {
+            background-color: rgba(16,133,72,0.15);
+            transform: scale(1.05);
+        }
+        
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.15); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        /* Mobile-specific styles */
+        @media (max-width: 480px) {
+            body {
+                font-size: 15px;
+            }
+
+            header {
+                padding: 0.75rem;
+            }
+
+            .logo {
+                font-size: 1.1rem;
+            }
+
+            .logo-icon {
+                width: 30px;
+                height: 30px;
+            }
+
+            .subtitle {
+                font-size: 0.8rem;
+            }
+
+            .container {
+                padding: 0;
+            }
+
+            .search-section {
+                padding: 1rem;
+            }
+
+            .search-section input {
+                font-size: 0.95rem;
+                padding: 0.8rem 1rem 0.8rem 2.4rem;
+            }
+
+            .btn {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .shop-name {
+                font-size: 1.25rem;
+            }
+
+            .shop-address {
+                font-size: 0.9rem;
+            }
+
+            .map-section {
+                height: 180px;
+            }
+
+            .map-label {
+                font-size: 10px;
+                padding: 3px 6px;
+            }
+
+            .step {
+                padding: 1rem 1rem 1rem 2.75rem;
+            }
+
+            .step-number {
+                width: 22px;
+                height: 22px;
+                font-size: 0.75rem;
+                top: 1rem;
+            }
+
+            .notes-section {
+                padding: 1rem;
+            }
+
+            .notes-list {
+                padding-left: 1.5rem;
+            }
+
+            .contact-info {
+                padding: 0.6rem;
+            }
+
+            .contact-avatar {
+                width: 36px;
+                height: 36px;
+            }
+
+            .contact-call {
+                width: 36px;
+                height: 36px;
+            }
+        }
+
+        /* Tablet-specific styles */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .container {
+                max-width: 100%;
+                padding: 0;
+            }
+
+            .map-section {
+                height: 200px;
+            }
+        }
+
+        /* Touch device optimizations */
+        @media (hover: none) {
+            .btn:hover {
+                background-color: var(--primary);
+            }
+
+            .contact-call:hover {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <!-- Custom Delivery Van Icon -->
+                        <path d="M3 6h13v10H3z"></path> <!-- van body -->
+                        <path d="M16 8h3l2 3v5h-5"></path> <!-- van cabin -->
+                        <circle cx="7" cy="16" r="2"></circle> <!-- left wheel -->
+                        <circle cx="17" cy="16" r="2"></circle> <!-- right wheel -->
+                    </svg>
+                </div>
+                AroundNoon
+            </div>
+        </div>
+        <div class="subtitle">
+            Delivery Manual
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="search-section">
+            <label class="search-label">Location Lookup</label>
+            <div class="input-group">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" id="shopCode" value="SH1002" class="active" placeholder="Enter shop code or name">
+            </div>
+            <button class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 18l6-6-6-6"></path>
+                </svg>
+                Find Location
+            </button>
+            <div class="search-results">
+                <span class="search-badge">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    Location found
+                </span>
+            </div>
+        </div>
+        
+        <!-- Shop information -->
+        <div class="location-header">
+            <span class="shop-badge">SH1002</span>
+            <h2 class="shop-name">Starbucks Nutgrove</h2>
+            <div class="shop-address">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                    <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                Atercin Liffey T/A Starbucks Nutgrove, Unit F1/F2, Nutgrove S/C, Nutgrove Avenue, Rathfarnham, Dublin 14
+            </div>
+        </div>
+        
+        <a href="https://maps.app.goo.gl/yQ4VywD2LVshcKd58" class="navigation-btn" target="_blank" style="background-color: var(--primary); color: white; font-weight: 500; padding: 0.65rem; font-size: 0.9rem; margin: 0.5rem 0; border-radius: 6px; box-shadow: none; display: inline-block; width: auto; max-width: 220px; text-align: center; margin-left: auto; margin-right: auto; display: flex; justify-content: center;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="17 1 21 5 17 9"></polyline>
+                <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+                <polyline points="7 23 3 19 7 15"></polyline>
+                <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+            </svg>
+            Navigate in Google Maps
+        </a>
+        
+        <h3 class="section-title">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+            </svg>
+            Delivery Protocol
+        </h3>
+        
+        <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">Enter through the white door and take the first left</div>
+            <div class="step-image">
+                <img src="SBCO010(1).png" alt="Main entrance" style="filter: contrast(1.05);">
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">Head straight to the end of the hall, shop will be on the right.</div>
+            <div class="step-image">
+                <img src="SBCO010.png" alt="Customer service desk" style="filter: contrast(1.05);">
+            </div>
+        </div>
+        
+     
+        
+        <div class="notes-section">
+            <h4 class="notes-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                Important Notes
+            </h4>
+            <ul class="notes-list">
+                <li>Delivery hours: 5:00 AM - 12:00 PM</li>
+                <li>Do not block fire exits when unloading</li>
+                <li>Temperature logs must be provided for refrigerated items</li>
+            </ul>
+            
+            <div class="contact-info">
+                <div class="contact-avatar">SJ</div>
+                <div class="contact-details">
+                    <div class="contact-name">Sarah Johnson</div>
+                    <div class="contact-phone">555-987-6543</div>
+                </div>
+                <a href="tel:5559876543" class="contact-call">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
